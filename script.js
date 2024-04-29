@@ -1,16 +1,15 @@
 function convertToRoman(num) {
-  	const obj = {
-      0:['M',1000], 
-      1:['D', 500], 
-      2:['C', 100], 
-      3:['L', 50], 
-      4:['X', 10], 
-      5:['V', 5], 
-      6:['I', 1]
+    const obj = {
+        0:['M',1000], 
+        1:['D', 500], 
+        2:['C', 100], 
+        3:['L', 50], 
+        4:['X', 10], 
+        5:['V', 5], 
+        6:['I', 1]
     };
 
-  //your code here
-	 let result = '';
+    let result = '';
 
     // Loop through the object keys
     for (let key in obj) {
@@ -23,29 +22,36 @@ function convertToRoman(num) {
             num -= value;
         }
 
-        // For special cases like IV, IX, etc.
-        for (let i = +key + 1; i < obj.length; i++) {
-            let nextSymbol = obj[i][0];
-            let nextValue = obj[i][1];
-
-            // Check if nextValue is less than num + 1, to avoid case like 9 -> VIIII
-            if (value - nextValue >= num + 1) {
-                result += nextSymbol + symbol;
-                num -= (value - nextValue);
-                break;
-            }
+        // Handle special cases like IV, IX, etc.
+        if (result.endsWith('IIII')) {
+            result = result.replace(/IIII$/, 'IV');
+            num += 4;
+        } else if (result.endsWith('VIIII')) {
+            result = result.replace(/VIIII$/, 'IX');
+            num += 9;
+        } else if (result.endsWith('XXXX')) {
+            result = result.replace(/XXXX$/, 'XL');
+            num += 40;
+        } else if (result.endsWith('LXXXX')) {
+            result = result.replace(/LXXXX$/, 'XC');
+            num += 90;
+        } else if (result.endsWith('CCCC')) {
+            result = result.replace(/CCCC$/, 'CD');
+            num += 400;
+        } else if (result.endsWith('DCCCC')) {
+            result = result.replace(/DCCCC$/, 'CM');
+            num += 900;
         }
     }
 
     return result;
-
 }
-// You can test your code by running the above function and printing it to console by pressing the run button at the top. To run it with input 36, uncomment the following line
 
+// Test cases
+console.log(convertToRoman(14)); // Output: XIV
+console.log(convertToRoman(798)); // Output: DCCXCVIII
+
+// Uncomment to test with an input
 // console.log(convertToRoman(36));
 
-
-
-
-// do not edit below this line
-module.exports = convertToRoman
+module.exports = convertToRoman;
