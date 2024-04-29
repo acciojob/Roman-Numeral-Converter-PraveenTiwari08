@@ -1,46 +1,28 @@
 function convertToRoman(num) {
     const obj = {
-        0:['M',1000], 
-        1:['D', 500], 
-        2:['C', 100], 
-        3:['L', 50], 
-        4:['X', 10], 
-        5:['V', 5], 
-        6:['I', 1]
+        0: ['M', 1000],
+        1: ['CM', 900],
+        2: ['D', 500],
+        3: ['CD', 400],
+        4: ['C', 100],
+        5: ['XC', 90],
+        6: ['L', 50],
+        7: ['XL', 40],
+        8: ['X', 10],
+        9: ['IX', 9],
+        10: ['V', 5],
+        11: ['IV', 4],
+        12: ['I', 1]
     };
 
     let result = '';
 
-    // Loop through the object keys
     for (let key in obj) {
-        let symbol = obj[key][0];
-        let value = obj[key][1];
+        const [symbol, value] = obj[key];
 
-        // Repeat the symbol as many times as possible while value is less than or equal to num
         while (value <= num) {
             result += symbol;
             num -= value;
-        }
-
-        // Handle special cases like IV, IX, etc.
-        if (result.endsWith('IIII')) {
-            result = result.replace(/IIII$/, 'IV');
-            num += 4;
-        } else if (result.endsWith('VIIII')) {
-            result = result.replace(/VIIII$/, 'IX');
-            num += 9;
-        } else if (result.endsWith('XXXX')) {
-            result = result.replace(/XXXX$/, 'XL');
-            num += 40;
-        } else if (result.endsWith('LXXXX')) {
-            result = result.replace(/LXXXX$/, 'XC');
-            num += 90;
-        } else if (result.endsWith('CCCC')) {
-            result = result.replace(/CCCC$/, 'CD');
-            num += 400;
-        } else if (result.endsWith('DCCCC')) {
-            result = result.replace(/DCCCC$/, 'CM');
-            num += 900;
         }
     }
 
@@ -51,7 +33,8 @@ function convertToRoman(num) {
 console.log(convertToRoman(14)); // Output: XIV
 console.log(convertToRoman(798)); // Output: DCCXCVIII
 
-// Uncomment to test with an input
+// Uncomment to test with more inputs
 // console.log(convertToRoman(36));
+// console.log(convertToRoman(1994));
 
 module.exports = convertToRoman;
